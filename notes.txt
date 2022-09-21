@@ -1,0 +1,82 @@
+Estrutura do projeto: 
+    Index
+    Routes
+    Controllers
+    Modules
+    Validators?
+
+Funcionalidades do projeto: 
+    - Auth
+        Register
+            Falta refatorar e pensar em tratamento de dados
+
+        Login
+            Falta refatorar e utilizar o jwt
+
+        Continuous access after login
+        
+        Logout
+
+    
+    - User
+        Profile
+        Customize Profile (description, profile picture...)
+        Update Account
+            Falta fazer o retorno do usuário atualizado. Foi feito com findByIdAndUpdate e retorna o resultado de findById. Procurar uma forma melhor
+            Falta pensar em validação de campos
+
+        Delete Account
+    
+    - DMs
+        Customize background?
+        DM Messages
+    
+    - Groups
+        Customize description
+        Customize background
+        Customize profile picture
+        Group Messages
+
+
+
+
+Rotas no insomnia: 
+    get - Logout
+    get - free
+    post - createAccount
+    post - login
+    put - updateAccount
+    delete - deleteAccount
+
+
+
+
+aluno:
+    hierarquia:str - simples
+    nome:str
+    sobrenome:str
+    numero de registro:str
+    curso:str
+    turma:str
+    semestre atual:int
+    notas e materias do semestre atual:arr[{materia:str, nota:float}]
+
+
+professor:
+    hierarquia:str - medio
+    nome:str
+    sobrenome:str
+    pis:str
+    turmas:arr[turma:str, materia:str]
+
+
+cordenador:
+    hierarquia:str - adm
+    nome:str
+    sobrenome:str
+    pis:str
+    curso:str
+    
+
+
+Foi criado um banco de dados no mongodb atlas para fazer a conexão.
