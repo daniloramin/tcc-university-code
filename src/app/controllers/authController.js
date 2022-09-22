@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const Aluno = require("../models/Aluno");
 const bcrypt = require("bcryptjs");
 
 const free = (req, res) => {
@@ -7,9 +7,22 @@ const free = (req, res) => {
 
 const register = async (req, res) => {
   // console.log(req.body);
-  const { username, email, password, profilePicture, description } = req.body;
 
-  const verification = await User.findOne({ email });
+  // Vai ser feita uma verificação de login para criar qualquer outra hierarquia alem de aluno
+
+  const {
+    hierarquia,
+    nome,
+    sobrenome,
+    telefone,
+    email,
+    senha,
+    numero_de_registro,
+    curso,
+    turma,
+  } = req.body;
+
+  const verification = await Aluno.findOne({ email });
 
   console.log(verification);
 
@@ -21,17 +34,21 @@ const register = async (req, res) => {
 
   try {
     const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(password, salt);
+    const hash = bcrypt.hashSync(senha, salt);
 
-    const user = new User({
-      username,
+    const aluno = new Aluno({
+      hierarquia,
+      nome,
+      sobrenome,
+      telefone,
       email,
-      password: hash,
-      profilePicture,
-      description,
+      senha: hash,
+      numero_de_registro,
+      curso,
+      turma,
     });
 
-    const registered = await user.save();
+    const registered = await aluno.save();
 
     res
       .status(201)

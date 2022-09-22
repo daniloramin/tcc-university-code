@@ -50,33 +50,111 @@ Rotas no insomnia:
 
 
 
+Regras de negócio:
+    Deve haver 3 hierarquias: aluno, professor, coordenador
+    Aluno:
+        deve conseguir se registrar na universidade
+        deve conseguir solicitar matricula em um curso (o coordenador que irá matricular o aluno)
+        deve conseguir atualizar seus dados pessoais: nome, sobrenome, telefone
+        deve conseguir ver seus dados de matrícula
+        deve conseguir ver as notas de todas as materias que já teve nos semestres anteriores
+        deve conseguir ver as notas do semestre atual
+    
+    Professor:
+        só pode ser registrado na universidade por um adm
+        só pode ser registrado em uma turma por um coordenador ou adm
+        deve conseguir atualizar seus dados pessoais: nome, sobrenome, telefone
+        deve conseguir ver seus dados de registro
+        deve conseguir ver as turmas em que leciona
+        deve conseguir dar notas somente aos alunos das diciplinas que leciona
+
+    Coordenador:
+        só pode ser registrado na universidade por uma adm
+        só pode ser registrado em um curso por um adm
+        deve consguir atualizar seus dados pessoais: nome, sobrenome, telefone
+        deve conseguir ver seus dados de registro
+        deve conseguir ver as turmas do curso que coordena
+        deve conseguir dar/alterar notas somente aos alunos do curso que coordena
+        deve conseguir matricular os alunos no curso
+        deve conseguir designar um professor para uma turma
+        deve conseguir criar um novo coordenador, professor ou aluno
+
+
+
+
 
 aluno:
-    hierarquia:str - simples
-    nome:str
-    sobrenome:str
-    numero de registro:str
-    curso:str
-    turma:str
-    semestre atual:int
-    notas e materias do semestre atual:arr[{materia:str, nota:float}]
+    dados:
+        hierarquia:str - aluno(simples)
+        nome:str
+        sobrenome:str
+        telefone:str
+        email:str
+        senha:str
+        numero de registro:str
+        curso:str
+        turma:str
+        notas e materias:arr[{materia:str, nota:float}]
+    metodos:
+        requestEnrollment
+        update
+        getByRegistrationNumber
+        getAllGradesByRegistrationNumber
+        getCurrentGradesByRegistrationNumber
+        
+        
 
 
 professor:
-    hierarquia:str - medio
-    nome:str
-    sobrenome:str
-    pis:str
-    turmas:arr[turma:str, materia:str]
+    dados:
+        hierarquia:str - professor(medio)
+        nome:str
+        sobrenome:str
+        telefone:str
+        email:str
+        senha:str
+        pis:str
+        turmas:arr[turma:str, materia:str]
+    metodos:
+        update
+        getByRegistrationNumber or pisNumber
+        getClasses
+        putCourseGrade
+
 
 
 cordenador:
-    hierarquia:str - adm
-    nome:str
-    sobrenome:str
-    pis:str
-    curso:str
+    dados:
+        hierarquia:str - coordenador(alto)
+        nome:str
+        sobrenome:str
+        telefone:str
+        email:str
+        senha:str
+        pis:str
+        curso:str
+    metodos:
+        update
+        getByRegistrationNumber
+        getAllClasses
+        putCourseGrade
+        enrollStudent
+
+Admin:
+    dados:
+        hierarquia:str - adm
+        nome:str
+        sobrenome:str
+        telefone:str
+        email:str
+        senha:str
     
+
+Rotas:
+    /auth/
+    /aluno/
+    /professor/
+    /coordenador/
 
 
 Foi criado um banco de dados no mongodb atlas para fazer a conexão.
