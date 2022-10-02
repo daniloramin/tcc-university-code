@@ -76,8 +76,17 @@ Regras de negócio:
         deve conseguir ver as turmas do curso que coordena
         deve conseguir dar/alterar notas somente aos alunos do curso que coordena
         deve conseguir matricular os alunos no curso
-        deve conseguir designar um professor para uma turma
-        deve conseguir criar um novo coordenador, professor ou aluno
+        deve conseguir designar um professor para uma turmas
+    
+    ADM:
+        Deve conseguir criar outros ADMs
+        Deve conseguir criar um aluno
+        Deve conseguir atualizar um aluno
+        Deve conseguir criar um professor
+        Deve conseguir atualizar um professor
+        Deve conseguir criar um coordenador
+        Deve conseguir atualizar um coordenador
+        Tem controle total sobre o crud da aplicação.
 
 
 
@@ -119,6 +128,7 @@ professor:
         update
         getByRegistrationNumber or pisNumber
         getClasses
+        getStudentsByClass?
         putCourseGrade
 
 
@@ -137,6 +147,7 @@ cordenador:
         update
         getByRegistrationNumber
         getAllClasses
+        getAllStudentsByCourse
         putCourseGrade
         enrollStudent
 
@@ -148,6 +159,16 @@ Admin:
         telefone:str
         email:str
         senha:str
+    methods:
+        update
+        updateAnyone
+        getStudent
+        getAllStudents
+        getTeacher
+        getAllTeachers
+        getCoordinator
+        getAllCoordinators
+
     
 
 Rotas:

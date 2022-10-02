@@ -1,0 +1,28 @@
+vai ter um documento com todas as contas.
+essas contas deverão ter a informação: _id, email, senha, hierarquia.
+
+quando criar um usuário(aluno, professor, coordenador ou adm), utilizar essas informações dentro do schema de dados.
+
+Ex:
+  conta:
+    {
+      "_id": 1234,
+      "email": "adwdaw@email.com",
+      "senha": "123456",
+      "hierarquia": "aluno"
+    }
+  
+  aluno:
+    {
+      "nome": "danilo",
+      "sobrenome": "ramin",
+      "telefone": "17999998888",
+      "email_de_contato": "aluno0@email.com",
+      "numero_de_registro": 2,
+      "curso": "ciencia da computacao",
+      "turma": "000wadasd165",
+      "conta": {
+        "_id": 1234,
+        "hierarquia": "aluno"
+      }
+    }

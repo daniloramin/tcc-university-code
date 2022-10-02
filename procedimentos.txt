@@ -1,0 +1,6 @@
+Usando JWT:
+  primeiramente faz o procedimento de buscar o usuário(que será feito o login) no banco de dados.
+  
+  depois cria um novo token, passando o conteúdo que deseja retornar em forma de objeto, o segredo do token e o tempo de duração. 
+
+  depois utiliza um middleware na rota para ler o token e validar o conteúdo dentro dele, vendo o ID e a hierarquia da pessoa logada. Caso não possuir token, quer dizer que não tem permissão.  

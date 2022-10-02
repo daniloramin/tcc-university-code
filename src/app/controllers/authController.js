@@ -1,5 +1,7 @@
+require("dotenv").config();
 const Aluno = require("../models/Aluno");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const free = (req, res) => {
   res.status(200).send(`Auth controller and router`);
@@ -68,7 +70,13 @@ const login = async (req, res) => {
       return res.status(400).send({ message: "Email or password is wrong." });
 
     if (bcrypt.compareSync(password, user.password)) {
-      return res.status(200).send({ message: "OK, senha igual" });
+      const token = jwt.sign(
+        { _id: user._id, hierarquia: user.hierarquia },
+        process.env.SECRET,
+        { expiresIn: "1h" }
+      );
+
+      return res.status(200).send({ message: "Login", data: { user, token } });
     } else {
       res.status(400).send({ message: "Email or password is wrong." });
     }
