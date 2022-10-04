@@ -1,5 +1,6 @@
 require("dotenv").config();
 const Aluno = require("../models/Aluno");
+const Conta = require("../models/Conta");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -11,52 +12,71 @@ const register = async (req, res) => {
   // console.log(req.body);
 
   // Vai ser feita uma verificação de login para criar qualquer outra hierarquia alem de aluno
+  const { email, senha, hierarquia } = req.body;
 
-  const {
-    hierarquia,
-    nome,
-    sobrenome,
-    telefone,
-    email,
-    senha,
-    numero_de_registro,
-    curso,
-    turma,
-  } = req.body;
-
-  const verification = await Aluno.findOne({ email });
-
+  const verification = await Conta.findOne({ email });
   console.log(verification);
 
+  // Verifica se o email já foi registrado
   if (verification) {
     return res
       .status(400)
       .send({ message: "This email is already registered" });
   }
 
+  // Criptografa a senha, independente de qual seja a hierarquia do usuário
+  let hash;
   try {
     const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(senha, salt);
-
-    const aluno = new Aluno({
-      hierarquia,
-      nome,
-      sobrenome,
-      telefone,
-      email,
-      senha: hash,
-      numero_de_registro,
-      curso,
-      turma,
-    });
-
-    const registered = await aluno.save();
-
-    res
-      .status(201)
-      .send({ message: `Register router and controller`, user: registered });
+    hash = bcrypt.hashSync(senha, salt);
   } catch (err) {
-    res.status(400).send({ message: "Ocorreu um erro", error: err.message });
+    return res.status(400).send({ message: err.message });
+  }
+
+  const { token } = req.body;
+
+  if (!token) {
+    try {
+      const conta = new Conta({
+        email,
+        senha: hash,
+        hierarquia: "Aluno",
+      });
+
+      const registered = await conta.save();
+
+      return res.status(201).send({
+        message: `A new account has been created.`,
+        conta: registered,
+      });
+    } catch (err) {
+      res.status(400).send({ message: "Ocorreu um erro", error: err.message });
+    }
+  }
+
+  if (token.hierarquia !== "adm") {
+    return res
+      .status(403)
+      .send({ message: "Only ADMs can create accounts while logged in" });
+  }
+
+  if (token.hierarquia === "adm") {
+    try {
+      const conta = new Conta({
+        email,
+        senha: hash,
+        hierarquia,
+      });
+
+      const registered = await conta.save();
+
+      return res.status(201).send({
+        message: `A new account has been created.`,
+        conta: registered,
+      });
+    } catch (err) {
+      res.status(400).send({ message: "Ocorreu um erro", error: err.message });
+    }
   }
 };
 
@@ -64,14 +84,14 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const conta = await Conta.findOne({ email });
 
-    if (!user)
+    if (!conta)
       return res.status(400).send({ message: "Email or password is wrong." });
 
-    if (bcrypt.compareSync(password, user.password)) {
+    if (bcrypt.compareSync(password, conta.password)) {
       const token = jwt.sign(
-        { _id: user._id, hierarquia: user.hierarquia },
+        { _id: conta._id, hierarquia: conta.hierarquia },
         process.env.SECRET,
         { expiresIn: "1h" }
       );

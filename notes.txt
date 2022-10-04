@@ -53,7 +53,7 @@ Rotas no insomnia:
 Regras de negócio:
     Deve haver 3 hierarquias: aluno, professor, coordenador
     Aluno:
-        deve conseguir se registrar na universidade
+        deve conseguir criar uma conta na universidade
         deve conseguir solicitar matricula em um curso (o coordenador que irá matricular o aluno)
         deve conseguir atualizar seus dados pessoais: nome, sobrenome, telefone
         deve conseguir ver seus dados de matrícula

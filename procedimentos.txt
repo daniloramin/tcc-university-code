@@ -1,6 +1,17 @@
-Usando JWT:
+Login usando JWT:
   primeiramente faz o procedimento de buscar o usuário(que será feito o login) no banco de dados.
   
   depois cria um novo token, passando o conteúdo que deseja retornar em forma de objeto, o segredo do token e o tempo de duração. 
 
   depois utiliza um middleware na rota para ler o token e validar o conteúdo dentro dele, vendo o ID e a hierarquia da pessoa logada. Caso não possuir token, quer dizer que não tem permissão.  
+
+Criar usuário:
+  Cria qualquer tipo de conta na mesma rota "register".
+
+  Haverá uma verificação se o usuário está logado. Caso não estiver, só conseguirá criar uma conta de hierarquia "aluno", que poderá ser criada sem passsar o campo "hierarquia".
+
+  Para a criação de outras contas será preciso verificar se a hierarquia da conta logada é "adm", acessando os dados do JWT. 
+
+  Primeiro cria uma conta normal passando email, senha e hierarquia. 
+  Contas com a hierarquia "aluno" podem ser criadas sem passar o campo hierarquia e sem estar logado. 
+  Contas com o tipo de hierarquia diferentes de "aluno" só podem ser criadas por uma conta logada de hierarquia "adm". 

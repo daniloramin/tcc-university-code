@@ -22,7 +22,6 @@ Ex:
       "curso": "ciencia da computacao",
       "turma": "000wadasd165",
       "conta": {
-        "_id": 1234,
-        "hierarquia": "aluno"
+        "_id": 1234
       }
     }

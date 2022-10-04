@@ -1,0 +1,2 @@
+mudar o model de "Conta" para "User".
+mudar no código de register e login todas as partes com "Conta" para "User". 
