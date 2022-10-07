@@ -21,6 +21,7 @@ Ex:
       "numero_de_registro": 2,
       "curso": "ciencia da computacao",
       "turma": "000wadasd165",
+      "notas": [{materia: "abc", nota: 1.23}]
       "conta": {
         "_id": 1234
       }

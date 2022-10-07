@@ -10,7 +10,9 @@ Criar usuário:
 
   Haverá uma verificação se o usuário está logado. Caso não estiver, só conseguirá criar uma conta de hierarquia "aluno", que poderá ser criada sem passsar o campo "hierarquia".
 
-  Para a criação de outras contas será preciso verificar se a hierarquia da conta logada é "adm", acessando os dados do JWT. 
+  Para a criação de outras contas será preciso verificar se a hierarquia da conta logada é "adm", acessando os dados do JWT.
+
+  Os dados do JWT são lidos pelo middleware e adicionados dentro do body da requisição.  
 
   Primeiro cria uma conta normal passando email, senha e hierarquia. 
   Contas com a hierarquia "aluno" podem ser criadas sem passar o campo hierarquia e sem estar logado. 

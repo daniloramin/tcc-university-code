@@ -1,2 +1,28 @@
-mudar o model de "Conta" para "User".
-mudar no código de register e login todas as partes com "Conta" para "User". 
+Foi feito o sistema de registro e login
+
+
+Fazer todas as rotas de aluno
+
+Fazer todas as rotas de professor
+
+Fazer todas as rotas de coordenador
+
+Fazer todas as rotas de adm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Pensar em uma rota para deletar contas?

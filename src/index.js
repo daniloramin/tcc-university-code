@@ -5,6 +5,9 @@ const db = require("./db/connect");
 const configCors = require("./config/cors");
 const auth = require("./app/routes/auth");
 const user = require("./app/routes/user");
+const aluno = require("./app/routes/aluno");
+
+const jwtAuthController = require("./app/controllers/jwtAuthController");
 
 // Connect to db
 db();
@@ -18,6 +21,9 @@ app.use(cors(configCors()));
 
 // Define all routes the app will use
 app.use("/auth", auth);
+
+app.use("/", jwtAuthController);
+app.use("/aluno", aluno);
 app.use("/user", user);
 
 // Start server

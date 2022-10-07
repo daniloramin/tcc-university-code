@@ -1,5 +1,4 @@
 require("dotenv").config();
-const Aluno = require("../models/Aluno");
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -35,12 +34,17 @@ const register = async (req, res) => {
 
   const { token } = req.body;
 
-  if (!token) {
+  let payload;
+  try {
+    payload = jwt.verify(token, process.env.SECRET);
+  } catch (err) {}
+
+  if (!payload) {
     try {
       const user = new User({
         email,
         senha: hash,
-        hierarquia: "Aluno",
+        hierarquia: "aluno",
       });
 
       const registered = await user.save();
@@ -54,13 +58,15 @@ const register = async (req, res) => {
     }
   }
 
-  if (token.hierarquia !== "adm") {
+  console.log("token: ", token);
+
+  if (payload.hierarquia !== "adm") {
     return res
       .status(403)
       .send({ message: "Only ADMs can create accounts while logged in" });
   }
 
-  if (token.hierarquia === "adm") {
+  if (payload.hierarquia === "adm") {
     try {
       const user = new User({
         email,
@@ -69,6 +75,7 @@ const register = async (req, res) => {
       });
 
       const registered = await user.save();
+      console.log("Criou uma conta sendo adm");
 
       return res.status(201).send({
         message: `A new account has been created.`,
@@ -81,7 +88,7 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, senha } = req.body;
 
   try {
     const user = await User.findOne({ email });
@@ -89,7 +96,8 @@ const login = async (req, res) => {
     if (!user)
       return res.status(400).send({ message: "Email or password is wrong." });
 
-    if (bcrypt.compareSync(password, user.password)) {
+    if (bcrypt.compareSync(senha, user.senha)) {
+      console.log("entrou no if de criar token");
       const token = jwt.sign(
         { _id: user._id, hierarquia: user.hierarquia },
         process.env.SECRET,
@@ -101,7 +109,7 @@ const login = async (req, res) => {
       res.status(400).send({ message: "Email or password is wrong." });
     }
   } catch (err) {
-    return res.status(400).send({ message: err });
+    return res.status(400).send({ message: err.message });
   }
 };
 
