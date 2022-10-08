@@ -8,9 +8,9 @@ module.exports = async (req, res, next) => {
   }
 
   try {
-    const hierarquia = jwt.verify(token, process.env.SECRET);
+    const tokenDatas = jwt.verify(token, process.env.SECRET);
 
-    req.body.payload = hierarquia;
+    req.body.payload = tokenDatas;
 
     next();
   } catch (err) {
