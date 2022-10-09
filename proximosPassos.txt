@@ -1,7 +1,7 @@
 Foi feito o sistema de registro e login
 
 
-Fazer todas as rotas de aluno
+Fazer todas as rotas de aluno - talvez terminado, falta testar e revisar. 
 
 Fazer todas as rotas de professor
 
@@ -11,6 +11,8 @@ Fazer todas as rotas de adm
 
 
 
+
+Não estou conseguindo passar o _id da conta do aluno como parâmetro na verificação. Só funcionou quando passei ele por complento como campo da requisição. 
 
 
 
