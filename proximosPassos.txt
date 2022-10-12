@@ -1,7 +1,11 @@
 Foi feito o sistema de registro e login
 
 
-Fazer todas as rotas de aluno - talvez terminado, falta testar e revisar. 
+Fazer todas as rotas de aluno: 
+  update - talvez terminado, falta testar e revisar. 
+  esqueci de colocar o campo "nmero_de_registro". Ele terá um id sequencial. Ler sobre:
+    https://data-flair.training/blogs/mongodb-auto-increment-sequence/
+     Basicamente vai fazer um documento com "{_id: "item", sequence: 0}" e depois uma função javascript pra pegar e atualizar. 
 
 Fazer todas as rotas de professor
 
