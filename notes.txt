@@ -107,9 +107,9 @@ aluno:
     metodos:
         requestEnrollment
         update
-        getByRegistrationNumber
-        getAllGradesByRegistrationNumber
-        getCurrentGradesByRegistrationNumber
+        getAllInfosByRegistrationNumber
+        getContactInfoByRegistrationNumber
+        getCourseInfoByRegistrationNumber
         
         
 
