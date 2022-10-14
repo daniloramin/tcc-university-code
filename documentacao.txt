@@ -1,0 +1,6 @@
+  Aluno: 
+    updatePersonalData - atualiza os dados pessoais do aluno logado utilizando o id da conta logada e retorna somente os dados possíveis de atualizar.
+    
+    updateCourseData - 
+    
+    getAllInfoByRegistrationNumber - pega todos os dados do aluno logado utilizando o id da conta logada

@@ -3,7 +3,7 @@ const alunoController = require("../controllers/alunoController");
 
 const router = express.Router();
 
-router.post("/update", alunoController.update);
+router.post("/updatePersonalData", alunoController.updatePersonalData);
 
 router.get(
   "/getAllInfoByRegistrationNumber",

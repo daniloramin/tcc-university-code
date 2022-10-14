@@ -1,16 +1,26 @@
 const Aluno = require("../models/Aluno");
 
-const update = async (req, res) => {
+const updatePersonalData = async (req, res) => {
   const { teste, nome, sobrenome, telefone, email_de_contato } = req.body;
   const { _id, hierarquia } = req.body.payload;
 
-  // if hierarquia == professor return error?
+  if (hierarquia === "professor") {
+    return res.status(403).send({ message: "Acesso proibido. " });
+  }
+
+  //if (!matriculado) return error
 
   try {
     const verification = await Aluno.findOne({ "conta._id": _id });
 
     if (!verification) {
       return res.status(400).send({ message: "Usuário não existe." });
+    }
+
+    if (!verification.matriculado) {
+      return res.status(400).send({
+        message: "Usuário não tem permissão pois ainda não está matriculado. ",
+      });
     }
   } catch (err) {
     return res.status(400).send({ message: err.message });
@@ -23,11 +33,23 @@ const update = async (req, res) => {
       { new: true }
     );
 
-    return res.status(200).send({ message: "Aluno atualizado.", aluno });
+    return res.status(200).send({
+      message: "Aluno atualizado.",
+      aluno: {
+        nome: aluno.nome,
+        sobrenome: aluno.sobrenome,
+        telefone: aluno.telefone,
+        email_de_contato: aluno.email_de_contato,
+      },
+    });
   } catch (err) {
     return res.status(400).send({ message: err.message });
   }
 };
+
+// const updateCourseData = async (req, res) => {
+//   const { curso, turma, matriculado } = req.body;
+// };
 
 const getAllInfoByRegistrationNumber = async (req, res) => {
   const { numero_de_registro } = req.body;
@@ -64,8 +86,11 @@ const getAllInfoByRegistrationNumber = async (req, res) => {
         curso: aluno.curso,
         turma: aluno.turma,
         notas: aluno.notas.map((n) => {
-          return { materia: n.materia, nota: n.nota };
+          return n.map((e) => {
+            return { materia: e.materia, nota: e.nota };
+          });
         }),
+        matriculado: aluno.matriculado,
       },
     });
   } catch (err) {
@@ -74,6 +99,7 @@ const getAllInfoByRegistrationNumber = async (req, res) => {
 };
 
 module.exports = {
-  update,
+  updatePersonalData,
+  updateCourseData,
   getAllInfoByRegistrationNumber /*, getContactInfoByRegistrationNumber, getCourseInfoByRegistrationNumber */,
 };
